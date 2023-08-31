@@ -6,29 +6,28 @@ resource "aws_backup_vault" "this" {
 }
 
 resource "aws_backup_vault" "drp_this" {
-  count    = var.enable_drp_replication ? 1 : 0
   provider = aws.drp
   name     = "${var.vault_name}-drp"
 }
 
 resource "aws_backup_plan" "this" {
-  name = "${var.vault_name}-backup-plan"
+  name = "${var.vault_name}-plan"
 
   rule {
-    rule_name         = "${var.vault_name}-plan-rule"
+    rule_name         = var.rule_name == null ? "default-rule" : "${var.vault_name}-rule"
     target_vault_name = aws_backup_vault.this.name
-    schedule          = "cron(0 3 * * ? *)" # every 24 hours
-
-    copy_action {
-      lifecycle {
-        cold_storage_after = 0
-        delete_after       = 30
-      }
-      destination_vault_arn = aws_backup_vault.drp_this.0.arn
-    }
+    schedule          = var.schedule # every 24 hours by default
 
     lifecycle {
-      delete_after = 30
+      cold_storage_after = var.plan_lifecycle.cold_storage_after
+      delete_after       = var.plan_lifecycle.delete_after
+    }
+    copy_action {
+      lifecycle {
+        cold_storage_after = var.copy_lifecycle.cold_storage_after
+        delete_after       = var.copy_lifecycle.delete_after
+      }
+      destination_vault_arn = aws_backup_vault.drp_this.arn
     }
   }
 

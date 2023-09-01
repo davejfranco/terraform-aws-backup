@@ -18,6 +18,12 @@ variable "vault_name" {
   nullable    = false
 }
 
+variable "lock_enabled" {
+  type        = bool
+  description = "weather or not to enable lock on the backup vault"
+  default     = true
+}
+
 variable "rule_name" {
   type        = string
   description = "value of the backup rule name"

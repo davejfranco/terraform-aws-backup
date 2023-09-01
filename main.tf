@@ -5,9 +5,20 @@ resource "aws_backup_vault" "this" {
   name = var.vault_name
 }
 
+resource "aws_backup_vault_lock_configuration" "this" {
+  count             = var.lock_enabled ? 1 : 0
+  backup_vault_name = var.vault_name
+}
+
 resource "aws_backup_vault" "drp_this" {
   provider = aws.drp
   name     = "${var.vault_name}-drp"
+}
+
+resource "aws_backup_vault_lock_configuration" "drp_this" {
+  provider          = aws.drp
+  count             = var.lock_enabled ? 1 : 0
+  backup_vault_name = "${var.vault_name}-drp"
 }
 
 resource "aws_backup_plan" "this" {

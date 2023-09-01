@@ -35,9 +35,10 @@ module "aws_backup_plan" {
 
 | Name                  | Description                                                                                     | Type           | Default | Required |
 |-----------------------|-------------------------------------------------------------------------------------------------|----------------|---------|----------|
-| `region`              | Region to create the main vault resources .                                                     | `string`       | "eu-west-1" | No   |
+| `region`              | Region to create the main vault resources .                                                     | `string`        | "eu-west-1" | No   |
 | `drp_region`          | DRP Region to create the replacated vault resources .                                           | `string`       | "eu-central-1" | No|
 | `vault_name`          | The name of the AWS Backup vault to associate with the backup plan.                             | `string`       | n/a     | Yes      |
+| `lock_enabled`        | Whether or not to enable backup vault lock.                                                     | `bool`          | true    | Yes      |
 | `rule_name`           | The name of the backup rule.                                                                    | `string`       | `null`  | No       |
 | `schedule`            | The backup schedule in cron format.                                                             | `string`       | `"cron(0 0 * * ? *)"` | No       |
 | `plan_lifecycle`      | The lifecycle policies for the backup plan.                                                     | `object`  | `{}`    | No       |
@@ -48,9 +49,10 @@ module "aws_backup_plan" {
 
 | Name                  | Description                                                                                     |
 |-----------------------|-------------------------------------------------------------------------------------------------|
-| `backup_vault_arn` | The ARN of the AWS Backup vault.                                                                 |
-| `backup_drp_vault_arn`  | The ARN of the AWS Backup drp vault.                                                                  |
-| `backup_plan_arn`| The ARN of the AWS Backup plan.                                |
-| `backup_iam_role_arn` | The AWS Backup iam role ARN.                                 |
-| `backup_iam_role_name` | The AWS Backup iam role name.                                 |
-| `backup_selection_id` | The ID of the AWS Backup Selection associated with the backup plan and the iam role.                                 |
+| `backup_vault_arn` | The ARN of the AWS Backup vault.                                                                   |
+| `backup_drp_vault_arn`  | The ARN of the AWS Backup drp vault.                                                          |
+| `aws_backup_vault_lock_configuration` | Vault lock configuration.                                                       |
+| `backup_plan_arn`| The ARN of the AWS Backup plan.                                                                      |
+| `backup_iam_role_arn` | The AWS Backup iam role ARN.                                                                    |
+| `backup_iam_role_name` | The AWS Backup iam role name.                                                                  |
+| `backup_selection_id` | The ID of the AWS Backup Selection associated with the backup plan and the iam role.            |

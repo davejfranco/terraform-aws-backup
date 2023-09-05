@@ -52,8 +52,8 @@ variable "plan_lifecycle" {
   })
   description = "map of the lifecycle of the backup"
   default = {
-    cold_storage_after = "30" #90 days
-    delete_after       = "90" #3 month
+    cold_storage_after = "30" #30 days
+    delete_after       = "120" #4 month
   }
   nullable = false
 }
@@ -65,8 +65,8 @@ variable "copy_lifecycle" {
   })
   description = "map of the copy action of the backup"
   default = {
-    cold_storage_after = "30" #90 days
-    delete_after       = "90" #3 month
+    cold_storage_after = "30" #30 days
+    delete_after       = "120" #4 month
   }
   nullable = false
 }
